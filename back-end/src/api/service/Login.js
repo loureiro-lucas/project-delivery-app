@@ -1,10 +1,9 @@
 const md5 = require('md5');
+const { user } = require('../../database/models');
 const { generateToken } = require('../middleware/jwtAuthentication');
 
-const { users } = require('../../database/models');
-
 async function loginService({ email, password }) {
-  const searchUser = await users.sequelize.
+  const searchUser = await user.findOne({ where: { email } });
 
   const hashPassword = md5(password);
 
@@ -17,7 +16,7 @@ async function loginService({ email, password }) {
   const token = generateToken({ id, email, role });
 
   const response = {
-    user: { id, name, role, email }, token,
+    id, name, role, email, token,
   };
 
   return response;

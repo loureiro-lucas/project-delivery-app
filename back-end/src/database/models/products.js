@@ -11,3 +11,5 @@ const products = (sequelize, DataTypes) => {
   });
   return products;
 };
+
+module.exports = products;

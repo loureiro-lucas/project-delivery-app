@@ -30,3 +30,5 @@ const salesProducts = (sequelize, DataTypes) => {
 
   return salesProducts;
 };
+
+module.exports = salesProducts;

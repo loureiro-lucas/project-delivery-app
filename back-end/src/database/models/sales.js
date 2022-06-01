@@ -1,4 +1,3 @@
-const users = require('./users');
 
 const sales = (sequelize, DataTypes) => {
   const sales = sequelize.define('sales', {
@@ -17,14 +16,16 @@ const sales = (sequelize, DataTypes) => {
   }, {
     timestamps: false,
   });
+  sales.associate = (models) => {
+    sales.belongsTo(
+      models.user, { foreignKey: 'user_id', as: 'customer' }
+    );
+  
+    sales.belongsTo(
+      models.user, { foreignKey: 'seller_id', as: 'seller' }
+    );
 
-  sales.belongTo(
-    Users, { foreignKey: 'user_id', as: 'customer' }
-  );
-
-  sales.belongTo(
-    Users, { foreignKey: 'seller_id', as: 'seller' }
-  );
+  }
 
   return sales;
 };
