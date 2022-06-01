@@ -1,5 +1,5 @@
 const users = (sequelize, DataTypes) => {
-  const user = sequelize.define('users', {
+  const users = sequelize.define('users', {
     id: { 
       allowNull: false,
       autoIncrement: true,
@@ -11,9 +11,10 @@ const users = (sequelize, DataTypes) => {
     role: { type: DataTypes.STRING },
   }, {
     timestamps: false,
+    tableName: 'users',
   });
 
-  return user;
+  return users;
 };
 
 module.exports = users;
