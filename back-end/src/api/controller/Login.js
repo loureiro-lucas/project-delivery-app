@@ -6,11 +6,11 @@ async function loginController(req, res, next) {
 
     const result = await loginService({ email, password });
 
-    if (!result) {
-      return { code: 401, json: { message: 'Incorrect email or password' } };
+    if (!result.status) {
+      return res.status(401).json({ message: 'Incorrect email or password' });
     }
 
-    return res.status(200).json(result);
+    return res.status(200).json(result.payload);
   } catch (error) {
     next(error);
   }
