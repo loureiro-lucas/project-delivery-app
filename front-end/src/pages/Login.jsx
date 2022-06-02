@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -12,14 +12,20 @@ import logo from '../images/rockGlass.svg';
 
 import postLogin from '../services';
 
+const EMAIL_REGEX = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i;
+const PASSWORD_MIN_LENGTH = 6;
+
+const validatePasswordInput = (passwordInput) => {
+  if (passwordInput.length >= PASSWORD_MIN_LENGTH) return true;
+  return false;
+};
+const validateEmailInput = (loginInput) => loginInput.match(EMAIL_REGEX);
+
 export default function Login() {
   const [loginInput, setLoginInput] = useState('');
   const [passwordInput, setPasswordInput] = useState('');
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [alarmErrorLogin, setAlarmErrorLogin] = useState(false);
-
-  const PASSWORD_MIN_LENGTH = 6;
-  const EMAIL_REGEX = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i;
 
   const navigate = useNavigate();
 
@@ -31,23 +37,13 @@ export default function Login() {
     setPasswordInput(value);
   };
 
-  const validateEmailInput = () => {
-    if (loginInput.match(EMAIL_REGEX)) return true;
-    return false;
-  };
-
-  const validatePasswordInput = () => {
-    if (passwordInput.length >= PASSWORD_MIN_LENGTH) return true;
-    return false;
-  };
-
-  const validateLogin = () => {
-    if (validateEmailInput() && validatePasswordInput()) {
+  const validateLogin = useCallback(() => {
+    if (validateEmailInput(loginInput) && validatePasswordInput(passwordInput)) {
       setIsButtonDisabled(false);
     } else {
       setIsButtonDisabled(true);
     }
-  };
+  }, [loginInput, passwordInput]);
 
   const submitLogin = async (event) => {
     event.preventDefault();
