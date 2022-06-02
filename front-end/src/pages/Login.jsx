@@ -54,7 +54,7 @@ export default function Login() {
     const response = await postLogin({ email: loginInput, password: passwordInput });
 
     if (response) {
-      navigate('/customer/product');
+      return navigate('/customer/products');
     }
 
     setAlarmErrorLogin(true);
@@ -62,7 +62,7 @@ export default function Login() {
 
   useEffect(() => {
     validateLogin();
-  }, [loginInput, passwordInput]);
+  }, [loginInput, passwordInput, validateLogin]);
 
   return (
     <Container>

@@ -5,6 +5,10 @@ const { generateToken } = require('../middleware/jwtAuthentication');
 async function loginService({ email, password }) {
   const searchUser = await user.findOne({ where: { email } });
 
+  if (!searchUser) {
+    return false;
+  }
+
   const hashPassword = md5(password);
 
   if (hashPassword !== searchUser.password) {
