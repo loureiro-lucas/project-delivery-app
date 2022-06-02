@@ -10,8 +10,8 @@ const startConfigs = () => {
     res.header('Access-Control-Allow-Headers', '*');
     next();
   };
-  app.use(accessControl)
-}
+  app.use(accessControl);
+};
 
 const app = express();
 app.use(express.json());
