@@ -3,6 +3,8 @@ const routerLogin = require('./routes');
 
 const error = require('./middleware/globalError');
 
+const app = express();
+
 const startConfigs = () => {
   const accessControl = (_req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
@@ -13,7 +15,6 @@ const startConfigs = () => {
   app.use(accessControl);
 };
 
-const app = express();
 app.use(express.json());
 startConfigs();
 app.use(routerLogin);
