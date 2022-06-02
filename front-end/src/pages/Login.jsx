@@ -12,7 +12,7 @@ import logo from '../images/rockGlass.svg';
 
 import postLogin from '../services';
 
-const EMAIL_REGEX = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i;
+const EMAIL_REGEX = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+\.[a-z]?$/i;
 const PASSWORD_MIN_LENGTH = 6;
 
 const validatePasswordInput = (passwordInput) => {
