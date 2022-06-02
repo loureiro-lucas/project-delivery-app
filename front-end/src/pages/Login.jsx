@@ -53,10 +53,11 @@ export default function Login() {
     event.preventDefault();
     const response = await postLogin({ email: loginInput, password: passwordInput });
 
-    if(!response) {
-      setAlarmErrorLogin(true);
+    if (response) {
+      navigate('/customer/product');
     }
 
+    setAlarmErrorLogin(true);
   };
 
   useEffect(() => {
@@ -103,9 +104,8 @@ export default function Login() {
           </Form>
         </Box>
       </Box>
-      { alarmErrorLogin ? <p
-        data-testid="common_login__element-invalid-email"
-      >erro de login</p> : null }
+      { alarmErrorLogin
+        ? <p data-testid="common_login__element-invalid-email">erro de login</p> : null }
     </Container>
   );
 }
