@@ -73,6 +73,7 @@ export default function Login() {
           >
             <span style={ { padding: '0 15px' } }>Login</span>
             <Input
+              data-testid="common_login__input-email"
               onChange={ handleLoginInput }
               placeholder="email@trybeer.com.br"
               type="text"
@@ -80,13 +81,24 @@ export default function Login() {
             />
             <span style={ { padding: '0 5px' } }>Senha</span>
             <Input
+              data-testid="common_login__input-password"
               onChange={ handlePasswordInput }
               placeholder="********"
               type="password"
               value={ passwordInput }
             />
-            <Button disabled={ isButtonDisabled } type="submit">LOGIN</Button>
-            <Button>Ainda não tenho conta</Button>
+            <Button
+              data-testid="common_login__button-login"
+              disabled={ isButtonDisabled }
+              type="submit"
+            >
+              LOGIN
+            </Button>
+            <Button
+              data-testid="common_login__button-register"
+            >
+              Ainda não tenho conta
+            </Button>
           </Form>
         </Box>
       </Box>
