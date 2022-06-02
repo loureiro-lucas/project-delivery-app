@@ -9,7 +9,7 @@ async function loginController(req, res, next) {
       return res.status(404).json({ message: 'Incorrect email or password' });
     }
 
-    return res.status(200).json(result);
+    return res.status(200).json(result.payload);
   } catch (error) {
     next(error);
   }

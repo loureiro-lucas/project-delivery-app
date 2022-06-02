@@ -1,5 +1,6 @@
 const express = require('express');
-const routerLogin = require('./routes');
+
+const loginRouter = require('./routes');
 
 const error = require('./middleware/globalError');
 
@@ -17,7 +18,8 @@ const startConfigs = () => {
 
 app.use(express.json());
 startConfigs();
-app.use(routerLogin);
+app.use(loginRouter);
 
 app.use(error);
+
 module.exports = app;
