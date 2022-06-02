@@ -2,9 +2,9 @@ import axios from 'axios';
 
 const postLogin = async ({ email, password }) => {
   try {
-    const URL = '';
+    const baseURL = 'http://localhost:3001/login';
 
-    const response = await axios.post(URL, {
+    const response = await axios.post({ baseURL }, {
       email,
       password,
     });

@@ -16,6 +16,7 @@ export default function Login() {
   const [loginInput, setLoginInput] = useState('');
   const [passwordInput, setPasswordInput] = useState('');
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+  const [alarmErrorLogin, setAlarmErrorLogin] = useState(false);
 
   const PASSWORD_MIN_LENGTH = 6;
   const EMAIL_REGEX = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i;
@@ -46,16 +47,16 @@ export default function Login() {
     } else {
       setIsButtonDisabled(true);
     }
-    console.log(isButtonDisabled);
   };
 
   const submitLogin = async (event) => {
     event.preventDefault();
     const response = await postLogin({ email: loginInput, password: passwordInput });
 
-    console.log(response);
+    if(!response) {
+      setAlarmErrorLogin(true);
+    }
 
-    navigate('/customer/product');
   };
 
   useEffect(() => {
@@ -102,6 +103,9 @@ export default function Login() {
           </Form>
         </Box>
       </Box>
+      { alarmErrorLogin ? <p
+        data-testid="common_login__element-invalid-email"
+      >erro de login</p> : null }
     </Container>
   );
 }
