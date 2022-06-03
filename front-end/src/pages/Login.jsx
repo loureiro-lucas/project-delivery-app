@@ -13,7 +13,6 @@ import logo from '../images/rockGlass.svg';
 import postLogin from '../services';
 
 const EMAIL_REGEX = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
-// const EMAIL_REGEX = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+\.[a-z]?$/i
 const PASSWORD_MIN_LENGTH = 6;
 
 const validatePasswordInput = (passwordInput) => {
@@ -102,7 +101,10 @@ export default function Login() {
         </Box>
       </Box>
       { alarmErrorLogin
-        ? <p data-testid="common_login__element-invalid-email">erro de login</p> : null }
+        ? (
+          <span data-testid="common_login__element-invalid-email">
+            erro de login
+          </span>) : null}
     </Container>
   );
 }
