@@ -1,3 +1,3 @@
-const loginRouter = require('./Login');
+const routerLogin = require('./Login');
 
-module.exports = loginRouter;
+module.exports = routerLogin;

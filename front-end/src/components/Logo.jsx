@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const Logo = styled.img`
-  animation: shake 2s infinite ease;
+  animation: shake 1s infinite ease;
   max-height: 20vh;
 
   @keyframes shake {

@@ -1,12 +1,9 @@
 const express = require('express');
-
-const loginRouter = require('./routes');
+const routerLogin = require('./routes');
 
 const error = require('./middleware/globalError');
 
 const app = express();
-
-app.use(express.json());
 
 const startConfigs = () => {
   const accessControl = (_req, res, next) => {
@@ -18,10 +15,9 @@ const startConfigs = () => {
   app.use(accessControl);
 };
 
+app.use(express.json());
 startConfigs();
-
-app.use(loginRouter);
+app.use(routerLogin);
 
 app.use(error);
-
 module.exports = app;
