@@ -1,12 +1,16 @@
 import React from 'react';
-import { Navigate } from 'react-router-dom';
-import './App.css';
+import { ThemeProvider } from 'styled-components';
+import Router from './routes';
+
+import GlobalStyles from './styles/GlobalStyles';
+import theme from './styles/theme';
 
 function App() {
   return (
-    <div className="App">
-      <Navigate to="/login" replace />
-    </div>
+    <ThemeProvider theme={ theme }>
+      <GlobalStyles />
+      <Router />
+    </ThemeProvider>
   );
 }
 
