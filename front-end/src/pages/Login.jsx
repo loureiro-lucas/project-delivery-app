@@ -10,17 +10,16 @@ import Input from '../components/Input';
 import Logo from '../components/Logo';
 import logo from '../images/rockGlass.svg';
 
-import postLogin from '../services';
+import { postLogin } from '../services';
 
-const EMAIL_REGEX = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
-// const EMAIL_REGEX = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+\.[a-z]?$/i
-const PASSWORD_MIN_LENGTH = 6;
+export const EMAIL_REGEX = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+export const PASSWORD_MIN_LENGTH = 6;
 
-const validatePasswordInput = (passwordInput) => {
+export const validatePasswordInput = (passwordInput) => {
   if (passwordInput.length >= PASSWORD_MIN_LENGTH) return true;
   return false;
 };
-const validateEmailInput = (loginInput) => loginInput.match(EMAIL_REGEX);
+export const validateEmailInput = (loginInput) => loginInput.match(EMAIL_REGEX);
 
 export default function Login() {
   const [loginInput, setLoginInput] = useState('');
@@ -30,7 +29,7 @@ export default function Login() {
 
   const navigate = useNavigate();
 
-  const handleLoginInput = ({ target: { value } }) => {
+  const handleEmailInput = ({ target: { value } }) => {
     setLoginInput(value);
   };
 
@@ -73,7 +72,7 @@ export default function Login() {
             <span style={ { padding: '0 15px' } }>Login</span>
             <Input
               data-testid="common_login__input-email"
-              onChange={ handleLoginInput }
+              onChange={ handleEmailInput }
               placeholder="email@trybeer.com.br"
               type="text"
               value={ loginInput }
@@ -95,6 +94,7 @@ export default function Login() {
             </Button>
             <Button
               data-testid="common_login__button-register"
+              onClick={ () => navigate('/register') }
             >
               Ainda não tenho conta
             </Button>
