@@ -6,6 +6,8 @@ const error = require('./middleware/globalError');
 
 const app = express();
 
+app.use(express.json());
+
 const startConfigs = () => {
   const accessControl = (_req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
@@ -16,8 +18,8 @@ const startConfigs = () => {
   app.use(accessControl);
 };
 
-app.use(express.json());
 startConfigs();
+
 app.use(loginRouter);
 
 app.use(error);

@@ -5,7 +5,7 @@ const { generateToken } = require('../middleware/jwtAuthentication');
 async function loginService({ email, password }) {
   const userFound = await user.findOne({ where: { email } });
 
-  if (!searchUser) {
+  if (!userFound) {
     return false;
   }
 
