@@ -49,11 +49,20 @@ export default function Login() {
     event.preventDefault();
     const response = await postLogin({ email: loginInput, password: passwordInput });
 
-    if (response) {
-      return navigate('/customer/products');
+    if (!response) {
+      setAlarmErrorLogin(true);
     }
 
-    setAlarmErrorLogin(true);
+    switch (response.data.role) {
+    case 'customer':
+      return navigate('/customer/products');
+    case 'seller':
+      return navigate('/seller/orders');
+    case 'administrator':
+      return navigate('/admin/manage');
+    default:
+      break;
+    }
   };
 
   useEffect(() => {
