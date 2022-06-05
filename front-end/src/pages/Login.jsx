@@ -53,6 +53,9 @@ export default function Login() {
       setAlarmErrorLogin(true);
     }
 
+    localStorage.clear();
+    localStorage.setItem('token', response.data.token);
+
     switch (response.data.role) {
     case 'customer':
       return navigate('/customer/products');
