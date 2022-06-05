@@ -93,6 +93,7 @@ export default function Login() {
           <Button
             data-testid="common_login__button-register"
             onClick={ () => navigate('/register') }
+            type="button"
           >
             Ainda não tenho conta
           </Button>
