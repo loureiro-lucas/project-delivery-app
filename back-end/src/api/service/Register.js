@@ -7,7 +7,7 @@ async function registerService({ name, email, hashPassword }) {
     return false;
   }
 
-  const createdUser = await user.create({ name, email, password: hashPassword });
+  const createdUser = await user.create({ name, email, password: hashPassword, role: 'customer' });
 
   return createdUser;
 }
