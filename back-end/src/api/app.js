@@ -1,6 +1,7 @@
 const express = require('express');
 const routerLogin = require('./routes');
 const routerRegister = require('./routes/Register');
+const routerAdminRegister = require('./routes/RegisterAdmin');
 
 const error = require('./middleware/globalError');
 
@@ -20,6 +21,7 @@ app.use(express.json());
 startConfigs();
 app.use(routerLogin);
 app.use(routerRegister);
+app.use(routerAdminRegister);
 
 app.use(error);
 module.exports = app;
