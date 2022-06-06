@@ -2,6 +2,9 @@ import React, { useState, useCallback, useEffect } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 
+import store from '../redux/store';
+import { setUsername } from '../redux/reducers/userSlice';
+
 import Form from '../components/Form';
 import Input from '../components/Input';
 import Button from '../components/Button';
@@ -54,6 +57,7 @@ export default function Registration() {
     const response = await postRegister(nameInput, emailInput, passwordInput);
 
     if (response) {
+      store.dispatch(setUsername(nameInput));
       return navigate('/customer/products');
     }
 
