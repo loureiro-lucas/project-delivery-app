@@ -2,6 +2,9 @@ import React, { useCallback, useEffect, useState } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 
+import store from '../redux/store';
+import { setUsername } from '../redux/reducers/userSlice';
+
 import Box from '../components/Box';
 import Button from '../components/Button';
 import Container from '../components/Container';
@@ -46,6 +49,9 @@ export default function Login() {
     if (!response) {
       setAlarmErrorLogin(true);
     }
+
+    const { data: { name } } = response;
+    store.dispatch(setUsername(name));
 
     localStorage.setItem('token', response.data.token);
 
