@@ -5,22 +5,15 @@ import { useNavigate } from 'react-router-dom';
 import Box from '../components/Box';
 import Button from '../components/Button';
 import Container from '../components/Container';
+import ErrorMessage from '../components/ErrorMessage';
 import Form from '../components/Form';
 import Input from '../components/Input';
 import Logo from '../components/Logo';
 import logo from '../images/rockGlass.svg';
 
-import postLogin from '../services';
+import { validateEmailInput, validatePasswordInput } from '../utils/inputValidations';
 
-const EMAIL_REGEX = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
-// const EMAIL_REGEX = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+\.[a-z]?$/i
-const PASSWORD_MIN_LENGTH = 6;
-
-const validatePasswordInput = (passwordInput) => {
-  if (passwordInput.length >= PASSWORD_MIN_LENGTH) return true;
-  return false;
-};
-const validateEmailInput = (loginInput) => loginInput.match(EMAIL_REGEX);
+import { postLogin } from '../services';
 
 export default function Login() {
   const [loginInput, setLoginInput] = useState('');
@@ -30,7 +23,7 @@ export default function Login() {
 
   const navigate = useNavigate();
 
-  const handleLoginInput = ({ target: { value } }) => {
+  const handleEmailInput = ({ target: { value } }) => {
     setLoginInput(value);
   };
 
@@ -50,11 +43,23 @@ export default function Login() {
     event.preventDefault();
     const response = await postLogin({ email: loginInput, password: passwordInput });
 
-    if (response) {
-      return navigate('/customer/products');
+    if (!response) {
+      setAlarmErrorLogin(true);
     }
 
-    setAlarmErrorLogin(true);
+    localStorage.clear();
+    localStorage.setItem('token', response.data.token);
+
+    switch (response.data.role) {
+    case 'customer':
+      return navigate('/customer/products');
+    case 'seller':
+      return navigate('/seller/orders');
+    case 'administrator':
+      return navigate('/admin/manage');
+    default:
+      break;
+    }
   };
 
   useEffect(() => {
@@ -63,46 +68,49 @@ export default function Login() {
 
   return (
     <Container>
-      <Box>
+      <Box style={ { marginTop: '10vh' } }>
         <Logo src={ logo } alt="logo com um copo" />
-        <Box style={ { width: '350px' } }>
-          <Form
-            onSubmit={ submitLogin }
-            style={ { flexDirection: 'column', height: '280px' } }
+        <Form
+          onSubmit={ submitLogin }
+          style={ { flexDirection: 'column', height: '300px' } }
+        >
+          <span style={ { padding: '0 15px' } }>Login</span>
+          <Input
+            data-testid="common_login__input-email"
+            onChange={ handleEmailInput }
+            placeholder="email@trybeer.com.br"
+            type="text"
+            value={ loginInput }
+          />
+          <span style={ { padding: '0 5px' } }>Senha</span>
+          <Input
+            data-testid="common_login__input-password"
+            onChange={ handlePasswordInput }
+            placeholder="********"
+            type="password"
+            value={ passwordInput }
+          />
+          { alarmErrorLogin && (
+            <ErrorMessage data-testid="common_login__element-invalid-email">
+              Credenciais inválidas
+            </ErrorMessage>
+          )}
+          <Button
+            data-testid="common_login__button-login"
+            disabled={ isButtonDisabled }
+            type="submit"
           >
-            <span style={ { padding: '0 15px' } }>Login</span>
-            <Input
-              data-testid="common_login__input-email"
-              onChange={ handleLoginInput }
-              placeholder="email@trybeer.com.br"
-              type="text"
-              value={ loginInput }
-            />
-            <span style={ { padding: '0 5px' } }>Senha</span>
-            <Input
-              data-testid="common_login__input-password"
-              onChange={ handlePasswordInput }
-              placeholder="********"
-              type="password"
-              value={ passwordInput }
-            />
-            <Button
-              data-testid="common_login__button-login"
-              disabled={ isButtonDisabled }
-              type="submit"
-            >
-              LOGIN
-            </Button>
-            <Button
-              data-testid="common_login__button-register"
-            >
-              Ainda não tenho conta
-            </Button>
-          </Form>
-        </Box>
+            LOGIN
+          </Button>
+          <Button
+            data-testid="common_login__button-register"
+            onClick={ () => navigate('/register') }
+            type="button"
+          >
+            Ainda não tenho conta
+          </Button>
+        </Form>
       </Box>
-      { alarmErrorLogin
-        ? <p data-testid="common_login__element-invalid-email">erro de login</p> : null }
     </Container>
   );
 }

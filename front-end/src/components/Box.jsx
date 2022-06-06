@@ -5,6 +5,7 @@ const Box = styled.div`
   flex-direction: column;
   justify-content: center;
   padding: 10px;
+  width: 100%;
 `;
 
 export default Box;

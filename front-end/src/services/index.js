@@ -1,19 +1,49 @@
 import axios from 'axios';
 
-const postLogin = async ({ email, password }) => {
-  try {
-    const baseURL = `http://${process.env.REACT_APP_HOSTNAME}:${process.env.REACT_APP_BACKEND_PORT}/login`;
+const baseURL = `http://${process.env.REACT_APP_HOSTNAME}:${process.env.REACT_APP_BACKEND_PORT}`;
 
-    const response = await axios.post(baseURL, {
+export const postLogin = async ({ email, password }) => {
+  try {
+    const loginURL = `${baseURL}/login`;
+
+    const response = await axios.post(loginURL, {
       email,
       password,
     });
 
-    console.log(response);
     return response;
   } catch (error) {
-    console.log(error);
+    console.log(error.message);
   }
 };
 
-export default postLogin;
+export const postRegister = async (name, email, password) => {
+  try {
+    const registerURL = `${baseURL}/register`;
+    const response = await axios.post(registerURL, { name, email, password });
+
+    return response;
+  } catch (error) {
+    console.error(error.message);
+  }
+};
+
+export const postAdminRegister = async (register) => {
+  try {
+    const registerURL = `${baseURL}/admin/register`;
+    const response = await axios.post(registerURL, {
+      name: register.nameInput,
+      email: register.emailInput,
+      password: register.passwordInput,
+      role: register.roleInput,
+    }, {
+      headers: {
+        Authorization: register.token,
+      },
+    });
+
+    return response;
+  } catch (error) {
+    console.error(error.message);
+  }
+};
