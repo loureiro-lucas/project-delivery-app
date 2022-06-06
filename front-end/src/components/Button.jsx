@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+const DISABLED_OPACITY = 0.5;
+
 const Button = styled.button`
   background-color: ${({ theme, BGColor }) => (
     BGColor
@@ -14,9 +16,19 @@ const Button = styled.button`
       ? theme.palette[fontColor]
       : theme.palette.lightText
   )};
+  cursor: ${({ disabled }) => (
+    !disabled
+      ? 'pointer'
+      : 'not-allowed'
+  )};
   font-size: 1.25rem;
   font-weight: lighter;
   height: 42px;
+  opacity: ${({ disabled }) => (
+    !disabled
+      ? 1
+      : DISABLED_OPACITY
+  )};
   width: 100%;
 `;
 
