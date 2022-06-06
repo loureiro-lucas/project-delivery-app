@@ -67,7 +67,7 @@ export default function Login() {
 
   return (
     <Container>
-      <Box style={ { marginTop: '10vh' } }>
+      <Box desktopSize="350px" style={ { marginTop: '10vh' } }>
         <Logo src={ logo } alt="logo com um copo" />
         <Form
           onSubmit={ submitLogin }
