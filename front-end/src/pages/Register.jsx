@@ -66,7 +66,7 @@ export default function Registration() {
 
   return (
     <Container>
-      <Box style={ { marginTop: '10vh' } }>
+      <Box desktopSize="350px" style={ { marginTop: '10vh' } }>
         <Title>Cadastro</Title>
         <Form
           onSubmit={ submitRegister }

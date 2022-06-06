@@ -8,10 +8,10 @@ const Form = styled.form`
   width: 100%;
   
   @media only screen and (min-width: 600px) {
-    align-items: center;
+    align-items: ${({ desktopDirection }) => desktopDirection && 'center'};
     flex-direction: ${({ desktopDirection }) => desktopDirection || 'column'};
     height: ${({ desktopSize, mobileSize }) => desktopSize || mobileSize};
-    justify-content: center;
+    justify-content: ${({ desktopDirection }) => desktopDirection && 'center'};
   }
 `;
 
