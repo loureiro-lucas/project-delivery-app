@@ -47,7 +47,6 @@ export default function Login() {
       setAlarmErrorLogin(true);
     }
 
-    localStorage.clear();
     localStorage.setItem('token', response.data.token);
 
     switch (response.data.role) {
@@ -68,11 +67,11 @@ export default function Login() {
 
   return (
     <Container>
-      <Box style={ { marginTop: '10vh' } }>
+      <Box desktopSize="350px" style={ { marginTop: '10vh' } }>
         <Logo src={ logo } alt="logo com um copo" />
         <Form
           onSubmit={ submitLogin }
-          style={ { flexDirection: 'column', height: '300px' } }
+          mobileSize="350px"
         >
           <span style={ { padding: '0 15px' } }>Login</span>
           <Input

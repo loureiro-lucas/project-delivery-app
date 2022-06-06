@@ -29,7 +29,12 @@ const Button = styled.button`
       ? 1
       : DISABLED_OPACITY
   )};
-  width: 100%;
+  width: ${({ mobileSize }) => mobileSize || '100%'};
+
+  @media only screen and (min-width: 600px) {
+    margin-left: ${({ desktopSpacer }) => desktopSpacer || 0};
+    width: ${({ desktopSize }) => desktopSize || '100%'};
+  }
 `;
 
 export default Button;

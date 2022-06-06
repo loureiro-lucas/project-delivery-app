@@ -16,7 +16,7 @@ import { postRegister } from '../services';
 import Box from '../components/Box';
 import Container from '../components/Container';
 import ErrorMessage from '../components/ErrorMessage';
-import Title from '../components/Register/Title';
+import Title from '../components/Title';
 
 export default function Registration() {
   const [nameInput, setNameInput] = useState('');
@@ -66,11 +66,11 @@ export default function Registration() {
 
   return (
     <Container>
-      <Box style={ { marginTop: '10vh' } }>
+      <Box desktopSize="350px" style={ { marginTop: '10vh' } }>
         <Title>Cadastro</Title>
         <Form
           onSubmit={ submitRegister }
-          style={ { flexDirection: 'column', height: '350px' } }
+          mobileSize="350px"
         >
           <span style={ { padding: '0 15px' } }>Nome:</span>
           <Input

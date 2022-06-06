@@ -1,13 +1,21 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import Input from '../components/Input';
-import { validateEmailInput, validatePasswordInput } from '../utils/inputValidations';
-import { postAdminRegister } from '../services';
 
-export const NAME_MIN_LENGTH = 12;
-export const validateNameInput = (nameInput) => {
-  if (nameInput.length >= NAME_MIN_LENGTH) return true;
-  return false;
-};
+import Container from '../components/Container';
+import Input from '../components/Input';
+
+import {
+  validateEmailInput,
+  validateNameInput,
+  validatePasswordInput } from '../utils/inputValidations';
+
+import { postAdminRegister } from '../services';
+import Box from '../components/Box';
+import Form from '../components/Form';
+import Title from '../components/Title';
+import Button from '../components/Button';
+import DropdownMenu from '../components/DropdownMenu';
+
+const USER_TYPE_OPTIONS = ['Customer', 'Seller', 'Administrator'];
 
 export default function Manage() {
   const [nameInput, setNameInput] = useState('');
@@ -26,7 +34,7 @@ export default function Manage() {
   const handlePasswordInput = ({ target: { value } }) => {
     setPasswordInput(value);
   };
-  const handleRoleInput = ({ target: { value } }) => {
+  const handleRoleInput = (value) => {
     setRoleInput(value);
   };
 
@@ -60,52 +68,59 @@ export default function Manage() {
   }, [emailInput, nameInput, passwordInput, validateCreate]);
 
   return (
-    <div>
-      <form
-        onSubmit={ submitRegister }
-      >
-        <p>Cadastrar novo usuário</p>
-        <span style={ { padding: '0 15px' } }>Nome</span>
-        <Input
-          data-testid="admin_manage__input-name"
-          placeholder="Nome e sobrenome"
-          type="text"
-          onChange={ handleNamelInput }
-        />
-        <span style={ { padding: '0 15px' } }>Email</span>
-        <Input
-          data-testid="admin_manage__input-email"
-          placeholder="seu-email@site.com.br"
-          type="text"
-          onChange={ handleEmailInput }
-        />
-        <span style={ { padding: '0 15px' } }>Senha</span>
-        <Input
-          data-testid="admin_manage__input-password"
-          placeholder="**********"
-          type="password"
-          onChange={ handlePasswordInput }
-        />
-        <span style={ { padding: '0 15px' } }>Tipo</span>
-        <select
-          onChange={ handleRoleInput }
-          data-testid="admin_manage__select-role"
+    <Container>
+      <Box>
+        <Title>Cadastrar novo usuário</Title>
+        <Form
+          desktopDirection="row"
+          desktopSize="50px"
+          onSubmit={ submitRegister }
+          mobileSize="380px"
         >
-          <option value="customer" defaultValue>Customer</option>
-          <option value="seller">Seller</option>
-          <option value="administrator">Administrator</option>
-        </select>
-        <button
-          data-testid="admin_manage__button-register"
-          type="submit"
-          disabled={ isButtonDisabled }
-        >
-          Cadastrar
-        </button>
-      </form>
-      { alarmInvalidRegister
-        ? <p data-testid="admin_manage__element-invalid-register">Usuário já existe</p>
-        : null }
-    </div>
+          <span style={ { padding: '0 15px' } }>Nome:</span>
+          <Input
+            data-testid="admin_manage__input-name"
+            placeholder="Nome e sobrenome"
+            type="text"
+            onChange={ handleNamelInput }
+          />
+          <span style={ { padding: '0 15px' } }>Email:</span>
+          <Input
+            data-testid="admin_manage__input-email"
+            placeholder="seu-email@site.com.br"
+            type="text"
+            onChange={ handleEmailInput }
+          />
+          <span style={ { padding: '0 15px' } }>Senha:</span>
+          <Input
+            data-testid="admin_manage__input-password"
+            placeholder="**********"
+            type="password"
+            onChange={ handlePasswordInput }
+          />
+          <span style={ { padding: '0 15px' } }>Tipo:</span>
+          <DropdownMenu
+            desktopSize="199px"
+            handler={ handleRoleInput }
+            options={ USER_TYPE_OPTIONS }
+            selectValue={ roleInput }
+            mobileSize="100%"
+            testId="admin_manage__select-role"
+          />
+          <Button
+            data-testid="admin_manage__button-register"
+            desktopSize="180px"
+            desktopSpacer="15px"
+            type="submit"
+            disabled={ isButtonDisabled }
+          >
+            CADASTRAR
+          </Button>
+        </Form>
+        { alarmInvalidRegister
+          ? <p data-testid="admin_manage__element-invalid-register">Usuário já existe</p>
+          : null }
+      </Box>
+    </Container>
   );
 }
