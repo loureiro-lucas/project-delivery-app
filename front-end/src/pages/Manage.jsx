@@ -14,6 +14,7 @@ export default function Manage() {
   const [emailInput, setEmailInput] = useState('');
   const [passwordInput, setPasswordInput] = useState('');
   const [roleInput, setRoleInput] = useState('customer');
+  const [alarmInvalidRegister, setAlarmInvalidRegister] = useState(false);
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
   const handleNamelInput = ({ target: { value } }) => {
@@ -46,7 +47,12 @@ export default function Manage() {
 
     const response = await
     postAdminRegister({ token, nameInput, emailInput, passwordInput, roleInput });
-    console.log(response);
+
+    if (!response) {
+      setAlarmInvalidRegister(true);
+    } else {
+      setAlarmInvalidRegister(false);
+    }
   };
 
   useEffect(() => {
@@ -97,6 +103,9 @@ export default function Manage() {
           Cadastrar
         </button>
       </form>
+      { alarmInvalidRegister
+        ? <p data-testid="admin_manage__element-invalid-register">Usuário já existe</p>
+        : null }
     </div>
   );
 }
