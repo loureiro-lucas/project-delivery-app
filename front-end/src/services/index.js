@@ -27,3 +27,23 @@ export const postRegister = async (name, email, password) => {
     console.error(error.message);
   }
 };
+
+export const postAdminRegister = async (register) => {
+  try {
+    const registerURL = `${baseURL}/admin/register`;
+    const response = await axios.post(registerURL, {
+      name: register.nameInput,
+      email: register.emailInput,
+      password: register.passwordInput,
+      role: register.roleInput,
+    }, {
+      headers: {
+        Authorization: register.token,
+      },
+    });
+
+    return response;
+  } catch (error) {
+    console.error(error.message);
+  }
+};

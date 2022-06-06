@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import Input from '../components/Input';
 import { validateEmailInput, validatePasswordInput } from './Login';
+import { postAdminRegister } from '../services';
 
 export const NAME_MIN_LENGTH = 12;
 export const validateNameInput = (nameInput) => {
@@ -12,7 +13,7 @@ export default function Manage() {
   const [nameInput, setNameInput] = useState('');
   const [emailInput, setEmailInput] = useState('');
   const [passwordInput, setPasswordInput] = useState('');
-  const [roleInput, setRoleInput] = useState('Customer');
+  const [roleInput, setRoleInput] = useState('customer');
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
   const handleNamelInput = ({ target: { value } }) => {
@@ -39,13 +40,24 @@ export default function Manage() {
     }
   }, [nameInput, emailInput, passwordInput, roleInput]);
 
+  const submitRegister = async (event) => {
+    const token = localStorage.getItem('token');
+    event.preventDefault();
+
+    const response = await
+    postAdminRegister({ token, nameInput, emailInput, passwordInput, roleInput });
+    console.log(response);
+  };
+
   useEffect(() => {
     validateCreate();
   }, [emailInput, nameInput, passwordInput, validateCreate]);
 
   return (
     <div>
-      <form>
+      <form
+        onSubmit={ submitRegister }
+      >
         <p>Cadastrar novo usuário</p>
         <span style={ { padding: '0 15px' } }>Nome</span>
         <Input

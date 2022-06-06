@@ -4,15 +4,13 @@ const registerAdminService = require('../service/RegisterAdmin');
 async function registerController(req, res, next) {
   try {
     const { name, email, password, role } = req.body;
+    const { authorization } = req.headers;
     const hashPassword = md5(password);
 
-    const registeredUser = await registerAdminService({ name, email, hashPassword, role });
-    
-    if (!registeredUser) {
-      return res.status(409).json({ message: 'Customer already exists' });
-    }
+    const { status, message } = await 
+      registerAdminService({ authorization, name, email, hashPassword, role });
 
-    return res.status(201).json({ message: 'User created' });
+    return res.status(status).json(message);
   } catch (error) {
     next(error);
   }
