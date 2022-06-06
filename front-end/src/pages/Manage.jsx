@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import Input from '../components/Input';
-import { validateEmailInput, validatePasswordInput } from './Login';
+import { validateEmailInput, validatePasswordInput } from '../utils/inputValidations';
 import { postAdminRegister } from '../services';
 
 export const NAME_MIN_LENGTH = 12;
