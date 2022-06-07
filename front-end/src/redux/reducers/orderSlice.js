@@ -16,10 +16,10 @@ export const orderSlice = createSlice({
       if (inCart) {
         const index = cart.findIndex((p) => p.id === id);
         cart[index].qty += 1;
-        totalPrice += price;
+        state.totalPrice += price;
       } else {
         cart.push({ id, name, price, qty: 1 });
-        totalPrice += price;
+        state.totalPrice += price;
       }
     },
 
@@ -31,15 +31,21 @@ export const orderSlice = createSlice({
 
       if (index) {
         cart[index].qty -= 1;
-        totalPrice -= price;
+        state.totalPrice -= price;
       }
 
       if (cart[index].qty === 0) {
-        cart.splice(index, 1);
+        state.cart.splice(index, 1);
       }
+    },
+
+    removeItem: (state, action) => {
+      const id = action.payload;
+      const index = state.cart.findIndex((p) => p.id === id);
+      state.cart.splice(index, 1);
     },
   },
 });
 
-export const { addToCart, decreaseQty } = orderSlice.actions;
+export const { addToCart, decreaseQty, removeItem } = orderSlice.actions;
 export default orderSlice.reducer;
